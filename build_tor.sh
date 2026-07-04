@@ -1,4 +1,4 @@
-export PKG_CONFIG_PATH="$(pwd)/libs/lib/pkgconfig:$(pwd)/libs/lib64/pkgconfig:$PKG_CONFIG_PATH"
+export PKG_CONFIG_PATH="$(pwd)/libs/build_libs/lib/pkgconfig:$(pwd)/libs/build_libs/lib64/pkgconfig"
 
 sudo update-alternatives --set gcc /usr/bin/gcc-8
 sudo update-alternatives --set g++ /usr/bin/g++-8

@@ -3,12 +3,7 @@
 /*.buildinfo
 /*.changes
 /tor
-/libs/bin
-/libs/include
-/libs/lib
-/libs/lib64
 /libs/libevent
-/libs/share
 /libs/openssl
 /libs/xz
 /libs/zlib
@@ -18,3 +13,4 @@
 /libs/openssl-build-stamp
 /libs/zlib-build-stamp
 /libs/zstd-build-stamp
+/libs/build_libs

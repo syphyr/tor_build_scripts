@@ -41,8 +41,8 @@ openssl/Makefile: openssl/Configure $(wildcard openssl/Configurations/*.*)
 			no-ec2m no-ssl-trace no-tls-deprecated-ec \
 			no-siv no-tests no-padlockeng no-ui-console \
 			no-apps no-async no-comp no-ktls no-legacy no-zlib \
-			--prefix=/ \
-			--openssldir=/
+			--prefix=/build_libs \
+			--openssldir=/build_libs
 
 openssl-build-stamp: openssl/Makefile
 	PATH=$(PATH) make -j`nproc` -C openssl install_dev DESTDIR=$(EXTERNAL_ROOT)
@@ -62,21 +62,21 @@ openssl-clean:
 libevent/Makefile: libevent/Makefile.am libevent/configure.ac
 	cd libevent && ./autogen.sh
 	cd libevent && ./configure \
-				LDFLAGS="-L../lib" \
-				CFLAGS="-I../include" \
+				LDFLAGS="-L../build_libs/lib" \
+				CFLAGS="-I../build_libs/include" \
 				--disable-libevent-regress \
 				--disable-samples \
 				--disable-shared \
 			        --prefix=/
 
 libevent-build-stamp: libevent/Makefile
-	$(MAKE) -C libevent install DESTDIR=$(EXTERNAL_ROOT)
+	$(MAKE) -C libevent install DESTDIR=$(EXTERNAL_ROOT)/build_libs
 	touch $@
 
 libevent-clean:
-	-rm -f lib/libevent.a
+	-rm -f build_libs/lib/libevent.a
 	-rm -f libevent-build-stamp
-	-$(MAKE) -C libevent uninstall DESTDIR=$(EXTERNAL_ROOT)
+	-$(MAKE) -C libevent uninstall DESTDIR=$(EXTERNAL_ROOT)/build_libs
 	-$(MAKE) -C libevent clean
 	-cd libevent && \
 		git clean -fdx && \
@@ -98,7 +98,7 @@ xz/Makefile: xz/configure.ac xz/Makefile.am
 			--disable-shared \
 			--disable-xz \
 			--disable-xzdec \
-			--prefix=/
+			--prefix=/build_libs
 
 lzma-build-stamp: xz/Makefile
 	$(MAKE) -C xz install DESTDIR=$(EXTERNAL_ROOT)
@@ -122,12 +122,12 @@ lzma-clean:
 zlib-build-stamp:
 	cd zlib && ./configure \
 		--static \
-		--prefix=$(EXTERNAL_ROOT)
-	$(MAKE) -C zlib install
+		--prefix=/build_libs
+	$(MAKE) -C zlib install DESTDIR=$(EXTERNAL_ROOT)
 	touch $@
 
 zlib-clean:
-	-$(MAKE) -C zlib uninstall
+	-$(MAKE) -C zlib uninstall DESTDIR=$(EXTERNAL_ROOT)
 	-$(MAKE) -C zlib clean
 	-rm -f lib/libz.a
 	-rm -f lib/pkgconfig/zlib.pc
@@ -145,26 +145,26 @@ zlib-clean:
 
 zstd-build-stamp:
 	$(MAKE) -C zstd/lib \
-		PREFIX=$(EXTERNAL_ROOT) \
+		PREFIX=$(EXTERNAL_ROOT)/build_libs \
 		libzstd.a-mt
 	$(MAKE) -C zstd/lib \
-		PREFIX=$(EXTERNAL_ROOT) \
+		PREFIX=$(EXTERNAL_ROOT)/build_libs \
 		libzstd.pc
-	test -d lib || mkdir lib
-	test -d lib/pkgconfig || mkdir lib/pkgconfig
-	test -d include || mkdir include
-	cp zstd/lib/libzstd.a lib
-	cp zstd/lib/libzstd.pc lib/pkgconfig
-	cp zstd/lib/zstd.h include
-	cp zstd/lib/deprecated/zbuff.h include
-	cp zstd/lib/zstd_errors.h include
-	cp zstd/lib/zdict.h include
+	test -d build_libs/lib || mkdir -p build_libs/lib
+	test -d build_libs/lib/pkgconfig || mkdir -p build_libs/lib/pkgconfig
+	test -d build_libs/include || mkdir -p build_libs/include
+	cp zstd/lib/libzstd.a build_libs/lib
+	cp zstd/lib/libzstd.pc build_libs/lib/pkgconfig
+	cp zstd/lib/zstd.h build_libs/include
+	cp zstd/lib/deprecated/zbuff.h build_libs/include
+	cp zstd/lib/zstd_errors.h build_libs/include
+	cp zstd/lib/zdict.h build_libs/include
 	touch $@
 
 zstd-clean:
-	-rm -f include/zstd.h include/zstd_errors.h include/zbuff.h include/zdict.h
-	-rm -f lib/libzstd.a
-	-rm -f lib/pkgconfig/libzstd.pc
+	-rm -f build_libs/include/zstd.h build_libs/include/zstd_errors.h build_libs/include/zbuff.h build_libs/include/zdict.h
+	-rm -f build_libs/lib/libzstd.a
+	-rm -f build_libs/lib/pkgconfig/libzstd.pc
 	-rm -f zstd-build-stamp
 	-$(MAKE) -C zstd uninstall
 	-$(MAKE) -C zstd clean
@@ -177,5 +177,8 @@ tor: openssl-build-stamp zlib-build-stamp lzma-build-stamp zstd-build-stamp libe
 
 PREBUILD_STATIC_LIBRARY: tor
 
-clean: openssl-clean zlib-clean libevent-clean lzma-clean zstd-clean
+build-clean:
+	-rm -rf build_libs
+
+clean: openssl-clean zlib-clean libevent-clean lzma-clean zstd-clean build-clean
 
