@@ -6,9 +6,15 @@
 /libs/bin
 /libs/include
 /libs/lib
+/libs/lib64
 /libs/libevent
 /libs/share
 /libs/openssl
 /libs/xz
 /libs/zlib
 /libs/zstd
+/libs/libevent-build-stamp
+/libs/lzma-build-stamp
+/libs/openssl-build-stamp
+/libs/zlib-build-stamp
+/libs/zstd-build-stamp
