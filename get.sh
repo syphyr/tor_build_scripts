@@ -38,6 +38,7 @@ fi
 cd xz
 git checkout v5.4
 git fetch
+git rebase
 git log --pretty="%C(yellow)%h %C(green)(%cr) %C(red)(%ar) %C(white)%s %C(blue)(%an)" -10 origin/v5.4
 cd ..
 
@@ -72,5 +73,6 @@ fi
 
 cd tor
 
+git checkout release-0.4.9
 git fetch
 git rebase
