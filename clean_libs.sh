@@ -1,0 +1,2 @@
+cd libs
+make clean

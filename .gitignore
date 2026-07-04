@@ -1,0 +1,14 @@
+/*.deb
+/*.ddeb
+/*.buildinfo
+/*.changes
+/tor
+/libs/bin
+/libs/include
+/libs/lib
+/libs/libevent
+/libs/share
+/libs/openssl
+/libs/xz
+/libs/zlib
+/libs/zstd
