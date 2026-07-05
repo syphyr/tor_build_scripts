@@ -67,16 +67,16 @@ libevent/Makefile: libevent/Makefile.am libevent/configure.ac
 				--disable-libevent-regress \
 				--disable-samples \
 				--disable-shared \
-			        --prefix=/
+			        --prefix=/build_libs
 
 libevent-build-stamp: libevent/Makefile
-	$(MAKE) -C libevent install DESTDIR=$(EXTERNAL_ROOT)/build_libs
+	$(MAKE) -C libevent install DESTDIR=$(EXTERNAL_ROOT)
 	touch $@
 
 libevent-clean:
 	-rm -f build_libs/lib/libevent.a
 	-rm -f libevent-build-stamp
-	-$(MAKE) -C libevent uninstall DESTDIR=$(EXTERNAL_ROOT)/build_libs
+	-$(MAKE) -C libevent uninstall DESTDIR=$(EXTERNAL_ROOT)
 	-$(MAKE) -C libevent clean
 	-cd libevent && \
 		git clean -fdx && \
