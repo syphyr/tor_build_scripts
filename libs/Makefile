@@ -41,12 +41,12 @@ openssl/Makefile: openssl/Configure $(wildcard openssl/Configurations/*.*)
 			no-ec2m no-ssl-trace no-tls-deprecated-ec \
 			no-siv no-tests no-padlockeng no-ui-console \
 			no-apps no-async no-comp no-ktls no-legacy no-zlib \
-			--prefix=/build_libs \
-			--libdir=/build_libs/lib \
-			--openssldir=/build_libs
+			--prefix=$(EXTERNAL_ROOT)/build_libs \
+			--libdir=$(EXTERNAL_ROOT)/build_libs/lib \
+			--openssldir=$(EXTERNAL_ROOT)/build_libs
 
 openssl-build-stamp: openssl/Makefile
-	PATH=$(PATH) make -j`nproc` -C openssl install_dev DESTDIR=$(EXTERNAL_ROOT)
+	PATH=$(PATH) make -j`nproc` -C openssl install_dev
 	touch $@
 
 openssl-clean:
@@ -68,16 +68,16 @@ libevent/Makefile: libevent/Makefile.am libevent/configure.ac
 				--disable-libevent-regress \
 				--disable-samples \
 				--disable-shared \
-			        --prefix=/build_libs
+			        --prefix=$(EXTERNAL_ROOT)/build_libs
 
 libevent-build-stamp: libevent/Makefile
-	$(MAKE) -C libevent install DESTDIR=$(EXTERNAL_ROOT)
+	$(MAKE) -C libevent install
 	touch $@
 
 libevent-clean:
 	-rm -f build_libs/lib/libevent.a
 	-rm -f libevent-build-stamp
-	-$(MAKE) -C libevent uninstall DESTDIR=$(EXTERNAL_ROOT)
+	-$(MAKE) -C libevent uninstall
 	-$(MAKE) -C libevent clean
 	-cd libevent && \
 		git clean -fdx && \
@@ -99,14 +99,14 @@ xz/Makefile: xz/configure.ac xz/Makefile.am
 			--disable-shared \
 			--disable-xz \
 			--disable-xzdec \
-			--prefix=/build_libs
+			--prefix=$(EXTERNAL_ROOT)/build_libs
 
 lzma-build-stamp: xz/Makefile
-	$(MAKE) -C xz install DESTDIR=$(EXTERNAL_ROOT)
+	$(MAKE) -C xz install
 	touch $@
 
 lzma-clean:
-	-$(MAKE) -C xz uninstall DESTDIR=$(EXTERNAL_ROOT)
+	-$(MAKE) -C xz uninstall
 	-$(MAKE) -C xz clean
 	-rm -rf include/lzma
 	-rm -f include/lzma.h
@@ -123,12 +123,12 @@ lzma-clean:
 zlib-build-stamp:
 	cd zlib && ./configure \
 		--static \
-		--prefix=/build_libs
-	$(MAKE) -C zlib install DESTDIR=$(EXTERNAL_ROOT)
+		--prefix=$(EXTERNAL_ROOT)/build_libs
+	$(MAKE) -C zlib install
 	touch $@
 
 zlib-clean:
-	-$(MAKE) -C zlib uninstall DESTDIR=$(EXTERNAL_ROOT)
+	-$(MAKE) -C zlib uninstall
 	-$(MAKE) -C zlib clean
 	-rm -f lib/libz.a
 	-rm -f lib/pkgconfig/zlib.pc
