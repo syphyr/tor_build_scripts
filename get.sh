@@ -13,6 +13,10 @@ if [ ! -d openssl ]; then
    git clone https://github.com/openssl/openssl.git
 fi
 
+echo ""
+echo "Updating openssl"
+echo ""
+
 cd openssl
 git checkout openssl-3.5
 git fetch
@@ -25,6 +29,10 @@ if [ ! -d libevent ]; then
    git clone https://github.com/libevent/libevent.git
 fi
 
+echo ""
+echo "Updating libevent"
+echo ""
+
 cd libevent
 git checkout 2.1.13-stable
 git fetch
@@ -34,6 +42,10 @@ cd ..
 if [ ! -d xz ]; then
    git clone https://github.com/tukaani-project/xz
 fi
+
+echo ""
+echo "Updating liblzma"
+echo ""
 
 cd xz
 git checkout v5.4
@@ -46,6 +58,10 @@ if [ ! -d zlib ]; then
    git clone https://github.com/madler/zlib
 fi
 
+echo ""
+echo "Updating zlib"
+echo ""
+
 cd zlib
 git checkout v1.3.2-tag
 git fetch
@@ -55,6 +71,10 @@ cd ..
 if [ ! -d zstd ]; then
    git clone https://github.com/facebook/zstd.git
 fi
+
+echo ""
+echo "Updating libzstd"
+echo ""
 
 cd zstd
 git checkout v1.5.7-tag
@@ -71,8 +91,11 @@ if [ ! -d tor ]; then
    cd ..
 fi
 
-cd tor
+echo ""
+echo "Updating Tor"
+echo ""
 
+cd tor
 git checkout release-0.4.9
 git fetch
 git rebase
