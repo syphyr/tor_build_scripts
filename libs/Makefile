@@ -108,10 +108,10 @@ lzma-build-stamp: xz/Makefile
 lzma-clean:
 	-$(MAKE) -C xz uninstall
 	-$(MAKE) -C xz clean
-	-rm -rf include/lzma
-	-rm -f include/lzma.h
-	-rm -f lib/liblzma.a
-	-rm -f lib/liblzma.la
+	-rm -rf build_libs/include/lzma
+	-rm -f build_libs/include/lzma.h
+	-rm -f build_libs/lib/liblzma.a
+	-rm -f build_libs/lib/liblzma.la
 	-rm -f lzma-build-stamp
 	-cd xz && \
 		git clean -fdx && \
@@ -130,12 +130,12 @@ zlib-build-stamp:
 zlib-clean:
 	-$(MAKE) -C zlib uninstall
 	-$(MAKE) -C zlib clean
-	-rm -f lib/libz.a
-	-rm -f lib/pkgconfig/zlib.pc
-	-rm -f include/zconf.h
-	-rm -f include/zlib.h
+	-rm -f build_libs/lib/libz.a
+	-rm -f build_libs/lib/pkgconfig/zlib.pc
+	-rm -f build_libs/include/zconf.h
+	-rm -f build_libs/include/zlib.h
 	-rm -f zlib-build-stamp
-	-rm -f share/man/man3/zlib.3
+	-rm -f build_libs/share/man/man3/zlib.3
 	-cd zlib && \
 		git clean -fdx && \
 		git reset --hard
