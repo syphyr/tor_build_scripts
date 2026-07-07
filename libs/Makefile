@@ -50,6 +50,13 @@ openssl-build-stamp: openssl/Makefile
 	touch $@
 
 openssl-clean:
+	-rm -rf build_libs/include/openssl
+	-rm -rf build_libs/lib/cmake
+	-rm -f build_libs/lib/libcrypto.a
+	-rm -f build_libs/lib/libssl.a
+	-rm -f build_libs/lib/pkgconfig/libcrypto.pc
+	-rm -f build_libs/lib/pkgconfig/libssl.pc
+	-rm -f build_libs/lib/pkgconfig/openssl.pc
 	-rm -f openssl-build-stamp
 	-cd openssl && \
 		git clean -fdx && \
