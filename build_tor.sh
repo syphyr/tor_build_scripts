@@ -18,8 +18,6 @@ export LD_LIBRARY_PATH=${TOR_LIBS_PATH}/lib:${LD_LIBRARY_PATH}
 export CFLAGS="-I${TOR_LIBS_PATH}/include ${CFLAGS}"
 export LDFLAGS="-L${TOR_LIBS_PATH}/lib ${LDFLAGS}"
 
-export LIBS="-levent"
-
 sudo update-alternatives --set gcc /usr/bin/gcc-8
 sudo update-alternatives --set g++ /usr/bin/g++-8
 sudo update-alternatives --set cpp /usr/bin/cpp-8
