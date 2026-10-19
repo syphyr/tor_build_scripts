@@ -18,9 +18,9 @@ export LD_LIBRARY_PATH=${TOR_LIBS_PATH}/lib:${LD_LIBRARY_PATH}
 export CFLAGS="-I${TOR_LIBS_PATH}/include ${CFLAGS}"
 export LDFLAGS="-L${TOR_LIBS_PATH}/lib ${LDFLAGS}"
 
-sudo update-alternatives --set gcc /usr/bin/gcc-8
-sudo update-alternatives --set g++ /usr/bin/g++-8
-sudo update-alternatives --set cpp /usr/bin/cpp-8
+#sudo update-alternatives --set gcc /usr/bin/gcc-8
+#sudo update-alternatives --set g++ /usr/bin/g++-8
+#sudo update-alternatives --set cpp /usr/bin/cpp-8
 
 cd tor
 #fakeroot dpkg-buildpackage -tc
@@ -28,6 +28,6 @@ cd tor
 #dpkg-buildpackage -tc
 dpkg-buildpackage -uc -us -b -tc
 
-sudo update-alternatives --auto gcc
-sudo update-alternatives --auto g++
-sudo update-alternatives --auto cpp
+#sudo update-alternatives --auto gcc
+#sudo update-alternatives --auto g++
+#sudo update-alternatives --auto cpp
